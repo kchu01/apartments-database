@@ -1,8 +1,4 @@
-# Apartment Database
-
-- Create a database called `apartments`
-- Using this database, create two tables, one for `owners` and one for `properties` (table names shoud be lowercase and plural)
-  
+# Apartment Database  
 ### Getting started
 
 * Fork and clone this as normal
