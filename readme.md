@@ -6,11 +6,9 @@
 ### Getting started
 
 * Fork and clone this as normal
-* In order to turn this assignment in, put your SQL commands into `part-1.sql`, `part-2.sql`, `part-3.sql`, and `part-4.sql`, which can be found in the `starter-code` folder. 
-  * Your process will likely be writing your command in the relevant file, and then copying it and pasting it in your `psql` shell. If it doesn't work, you can edit it in your IDE and try again.
+* Each part has a corresponding `.sql` file for you to do your work in. 
 * Add, commit, and push your changes when you finish each part
 * Make a pull request!
-* Relax! 😎
 
 ### Part 0: Draw an ERD
 You should always make a schema diagram (also known as an _E_ ntity _R_ elationship _D_ iagram) before you start writing code. Think of this as pseudocoding or making wireframes, but for your database instead of for your js or html.
@@ -66,7 +64,7 @@ To get a clue on the syntax, look into "sql add column to table".
 Note that for each table, you can use separate `INSERT INTO` statements or just one. You might have to google something like "sql insert many" to find the syntax to insert many at once!
 
 * Insert the following owners
-    * Donald - age 29
+    * William - age 29
     * Jane - age 43
     * Yuki - Age 67
     * Add 3 more people (you choose name / age)

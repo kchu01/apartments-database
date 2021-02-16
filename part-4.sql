@@ -10,9 +10,9 @@
 
 -- 6. Change Jane's name to Janet.
 
--- 7. Show the names of the first three owners in your owners table.
+-- 7. Show the names of the first three properties in your properties table.
 
--- 8. Show the name of all owners whose name contains an `a`.
+-- 8. Show the name of all properties whose name contains an `a`.
 
 -- 9. Show the highest age of all owners.
 
