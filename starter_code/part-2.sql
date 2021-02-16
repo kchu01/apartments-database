@@ -1,2 +1,1 @@
--- Insert Data
-
+-- Add the appropriate foreign key to the appropriate table

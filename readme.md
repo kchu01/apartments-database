@@ -2,23 +2,24 @@
 
 - Create a database called `apartments`
 - Using this database, create two tables, one for `owners` and one for `properties` (table names shoud be lowercase and plural)
-- Keep this relationship in mind when designing your schema:
-  + **One owner can have many properties**
   
-## Deliverable
+### Getting started
 
 * Fork and clone this as normal
-* In order to turn this assignment in, put your SQL commands into `part-1.sql`, `part-2.sql`, and `part-3.sql` which can be found in the `starter-code` folder. 
+* In order to turn this assignment in, put your SQL commands into `part-1.sql`, `part-2.sql`, `part-3.sql`, and `part-4.sql`, which can be found in the `starter-code` folder. 
   * Your process will likely be writing your command in the relevant file, and then copying it and pasting it in your `psql` shell. If it doesn't work, you can edit it in your IDE and try again.
 * Add, commit, and push your changes when you finish each part
 * Make a pull request!
 * Relax! 😎
 
-### Part 1: Create Tables
+### Part 0: Draw an ERD
+You should always make a schema diagram (also known as an _E_ ntity _R_ elationship _D_ iagram) before you start writing code. Think of this as pseudocoding or making wireframes, but for your database instead of for your js or html.
 
-Place your answers in `part-1.sql`.
+There are many ERD building tools out there, this one is free and can be used in the browser: https://app.dbdesigner.net/designer/schema/new. You should bookmark it and use it whenever you need to make an ERD.
 
-- Create a table called `owners`. This owners table should consist of:
+You're going to create two tables, the columns for which are described below. Think about what data type each column should be.
+
+- Create a table called `owners`, which should consist of:
   + `id` (this should be the primary key as well as a unique number that increments automatically)
   + `name` - name of owner
   + `age` - age of owner
@@ -26,79 +27,71 @@ Place your answers in `part-1.sql`.
   + `id` (this should be the primary key as well as a unique number that increments automatically)
   + `name` - name of property
   + `units` - number of units
-  + `owner_id` - reference to owner table
 
-### Part 2: Insert Data
+When you're done making your ERD, take a screenshot and place the image file in this directory. Add, commit, and push it!
 
-Place your answers in `part-2.sql`.
+### Part 1: Create Tables
+Time to turn our ERD into a real database! For the rest of this lab, you might find it helpful to do your work in the corresponding `.sql` file, then copy-paste it into your psql. If it doesn't work, you can edit it in your text editor and try again.
+
+If you need syntax help, here are some helpful google ideas: "sql create table", "sql primary key", "sql auto increment".
+
+Once you've created each table, look at it in psql (using `\d <your-table-name>`) and make sure all the columns look the way you want.
+
+### Part 2: one-to-many relationship
+We want a single user to be able to have many properties. Each property should belong to just 1 user. To do this, we will need to add a _foreign key_, which will be a column on one of our tables.
+
+Think about which of the two tables this column should go on? It helps to think about which entity is the parent and which is the child in this relationship.
+
+What data type should it be? 
+
+To get a clue on the syntax, look into "sql add column to table".
+
+<details>
+  <summary>Which table should it go on?</summary>
+  `properties`. If it went on owners, that would mean that each owner can have only 1 property, and that each property can have many owners. This is the opposite of what we want.
+</details>
+
+<details>
+  <summary>What data type should it be?</summary>
+  Integer: this foreign key column will correspond to the primary key of the `owners` table, so it should be the same data type as that column.
+</details>
+
+<details>
+  <summary>What sql command creates the column?</summary>
+  ALTER TABLE properties
+  ADD owner_id int;
+</details>
+
+### Part 3: Insert Data
+Note that for each table, you can use separate `INSERT INTO` statements or just one. You might have to google something like "sql insert many" to find the syntax to insert many at once!
 
 * Insert the following owners
     * Donald - age 29
-    * John - age 33
     * Jane - age 43
     * Yuki - Age 67
-    * Erin - Age 21
-    * Siobhan - Age 55
     * Add 3 more people (you choose name / age)
 
-* Insert the following properties (you can pick and choose the property owners)
-    * Archstone - 20 units
-    * Zenith Hills - 10 units
-    * Willowspring - 30 units
-    * Ridgefield Bay - 5 units
-    * Brookvista - 20 units
-    * Goldendale - 15 units
-    * Green Haven - 40 units
-    * Fair Creek - 35 units
-    * Parkview Pointe - 50 units
-    * Royal Gardens Court - 45 units
+* Insert the following properties
+    * Archstone - 20 units - belongs to Yuki
+    * Zenith Hills - 10 units - belongs to Yuki
+    * Willowspring - 30 units - belongs to Jane
     * Add 3 more properties (you choose name / units / property owners)
 
-### Part 3: Use Your Database
+### Part 4: Use Your Database
+Follow the prompts in `part-4.sql`! Beyond the basic CRUD commands, you'll need the `JOIN` operator.
 
-Write down the following sql statements that are required to solve the following tasks. Place your answers in `part-3.sql`.
+Note that our 2 tables have some column names in common. When you join these tables and select from them, it will be ambiguous which "name" or "id" column you are asking for.
 
-1. Show all the data in the owners table.
-2. Show the names of all owners.
-3. Show the ages of all of the owners in ascending order.
-4. Show the name of an owner whose name is Donald.
-5. Show the age of all owners who are older than 30.
-6. Show the name of all owners whose name starts with an E.
-7. Change Jane's age to 30.
-8. Change Jane's name to Janet.
-9. Delete the owner named Janet.
-10. Show the names of the first three owners in your owners table.
-11. Show the name of all owners whose name contains an `a`.
-12. Show all of the properties in alphabetical order that are not named Archstone and do not have an id of 3 or 5.
-13. Show the highest age of all owners.
-14. Show the highest age of owners who are under 30 and whose name contains an `o`. Limit to one result.
-15. Count the total number of properties where the owner_id is between 1 and 3.
+This will get confused as to whether you're asking for the name of the owners or the properties:
+```sql
+SELECT name FROM owners
+  JOIN properties
+  ON owner.id = property.owner_id
+```
 
-### Bonuses 
-
-These might require you to *look up documentation online*, or look at the next section in the notes. This is a bonus after all, so we're getting a little bit ahead!
-
-16. List all properties sorted by the owners names 
-17. In the properties table change the name of the column "name" to "property_name".
-18. Add a new property to the owner with an id of 3.
-
-<details>
-  <summary>Need a hint for 16?</summary>
-  Look up the JOIN keyword. This allows you to pull data from two different tables based on fields they have in common.
-</details>
-
-<details>
-  <summary>Need a hint for 17?</summary>
-  Look up documentation for ALTER TABLE. This allows you to change the schema (column name in this case).
-</details>
-
-<details>
-  <summary>Need a hint for 18?</summary>
-  Look up INSERT INTO. Don't forget that the foreign key, `owner_id` needs to exist as an id in the owner table!
-</details>
-
----
-
-## Licensing
-1. All content is licensed under a CC-BY-NC-SA 4.0 license.
-2. All software code is licensed under GNU GPLv3. For commercial use or alternative licensing, please contact legal@ga.co.
+But this will be interpreted unambiguously:
+```sql
+SELECT owners.name FROM owners
+  JOIN properties
+  ON owner.id = property.owner_id
+```
