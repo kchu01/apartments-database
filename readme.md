@@ -46,7 +46,7 @@ To get a clue on the syntax, look into "sql add column to table".
 
 <details>
   <summary>Which table should it go on?</summary>
-  `properties`. If it went on owners, that would mean that each owner can have only 1 property, and that each property can have many owners. This is the opposite of what we want.
+  properties: If it went on owners, that would mean that each owner can have only 1 property, and that each property can have many owners. This is the opposite of what we want.
 </details>
 
 <details>
